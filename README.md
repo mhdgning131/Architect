@@ -35,6 +35,10 @@ cd .architect
 sudo chmod +x install.sh
 ./install.sh
 ```
+### Option 2: Using pip
+```
+pip install architect-cli==0.1.4
+```
 
 After installation, you can use `architect` command globally:
 
