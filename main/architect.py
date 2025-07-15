@@ -10,7 +10,7 @@
     ║      ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝ ╚═════╝   ╚═╝        ║
     ║                                                                                ║
     ║                           CLI File structure builder                           ║
-    ║                                    v 1.0.0                                     ║                                                                                                ║
+    ║                                    v 0.1.4                                     ║                                                                                                ║
     ╚════════════════════════════════════════════════════════════════════════════════╝
                                                                      
 """
@@ -225,7 +225,6 @@ class ArchitectureBuilder:
                     full_path.mkdir(parents=True, exist_ok=True)
                     print(f"✓ Directory created: {full_path}")
                 else:
-                    # Ensure parent directories exist
                     full_path.parent.mkdir(parents=True, exist_ok=True)
                     full_path.touch()
                     print(f"✓ File created: {full_path}")
