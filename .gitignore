@@ -1,4 +1,5 @@
 .gitignore
+structure.txt
 project.txt
 pyproject.toml
 dist*

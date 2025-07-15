@@ -143,21 +143,42 @@ class ArchitectureBuilder:
 
     def _extract_name(self, line):
         name = re.sub(r'^[\s│├└─]+', '', line).strip()
-        
-        if '#' in name:
-            name = name.split('#')[0].strip()
-        
+
+        comment_delimiters = ['#', '←', '//', '--', ';']
+        for delimiter in comment_delimiters:
+            if delimiter in name:
+                name = name.split(delimiter)[0].strip()
+                return name
+
+        # This aim to handle comments without delimiters
+        # I loook for patterns like: "filename.ext     Description text"
+        comment_pattern = r'^([^\s]+(?:\.[a-zA-Z0-9]+)?(?:/)?)\s{2,}.*'
+        match = re.match(comment_pattern, name)
+
+        if match:
+            name = match.group(1)
+        else:
+            parts = name.split()
+            if len(parts) > 1:
+                first_part = parts[0]
+                if ('.' in first_part or 
+                    first_part.endswith('/') or 
+                    (len(first_part) > 0 and not any(c in first_part for c in [' ', '\t']))):
+                    name = first_part
+
         return name
+    
     
     def _build_paths(self, structure):
         if not structure:
             return structure
 
+        self._validate_structure(structure)
+
         path_stack = []
 
         for item in structure:
             level = item['level']
-
             path_stack = path_stack[:level]
 
             if path_stack:
@@ -171,6 +192,21 @@ class ArchitectureBuilder:
                 path_stack.append(item['name'])
 
         return structure
+    
+    def _validate_structure(self, structure):
+        for i, item in enumerate(structure):
+            if not item['is_directory']:
+                for j in range(i + 1, len(structure)):
+                    next_item = structure[j]
+                    if next_item['level'] <= item['level']:
+                        break
+                    if next_item['level'] == item['level'] + 1:
+                        print(f"⚠ Warning: '{item['name']}' is a file but contains '{next_item['name']}'")
+                        
+                        print(f"✓ Auto-correcting: Converting '{item['name']}' to directory")
+                        item['is_directory'] = True
+                        item['name'] = item['name']
+                        break
     
     def create_structure(self, structure, dry_run=False):
         created_items = []
