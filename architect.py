@@ -46,7 +46,6 @@ class ArchitectureBuilder:
         return self._build_paths(structure)
     
     def _calculate_indent_level(self, line):
-        """Calculate indentation level from ASCII tree structure"""
         if not line.strip():
             return 0
 
@@ -57,7 +56,7 @@ class ArchitectureBuilder:
 
         prefix = line[:content_match.start()]
 
-        # Count the depth by counting tree structure patterns
+        # here we count the depth by counting tree structure patterns
         # Each level is typically represented by either:
         # - "│   " (4 chars) for continuing vertical lines
         # - "    " (4 chars) for empty space at that level
@@ -67,7 +66,6 @@ class ArchitectureBuilder:
         i = 0
 
         while i < len(prefix):
-            # Look for 4-character patterns that indicate tree levels
             if i + 4 <= len(prefix):
                 four_chars = prefix[i:i+4]
                 if four_chars in ['│   ', '    ']:
@@ -75,19 +73,15 @@ class ArchitectureBuilder:
                     i += 4
                     continue
                 elif four_chars[:3] in ['├──', '└──']:
-                    # This is the connector for the current level
                     level += 1
                     break
                 
-            # Look for 3-character patterns
             if i + 3 <= len(prefix):
                 three_chars = prefix[i:i+3]
                 if three_chars in ['├──', '└──']:
-                    # This is the connector for the current level
                     level += 1
                     break
                 
-            # If we can't match standard patterns, move forward
             i += 1
 
         return level
@@ -109,10 +103,8 @@ class ArchitectureBuilder:
         for item in structure:
             level = item['level']
 
-            # Adjust the path_stack to the current level
             path_stack = path_stack[:level]
 
-            # Build the full path
             if path_stack:
                 full_path = '/'.join(path_stack + [item['name']])
             else:
@@ -120,7 +112,6 @@ class ArchitectureBuilder:
 
             item['path'] = full_path
 
-            # If this is a directory, add it to the path stack for subsequent items
             if item['is_directory']:
                 path_stack.append(item['name'])
 
