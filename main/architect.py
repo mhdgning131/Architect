@@ -1,8 +1,17 @@
 #!/usr/bin/env python3
 """
-CLI Architecture Builder - Créer des structures de fichiers à partir d'une représentation textuelle
-ET scanner des dossiers existants pour générer des représentations
-Supporte les indentations avec des espaces, des tabulations et des caractères d'arbre ASCII
+    ╔════════════════════════════════════════════════════════════════════════════════╗
+    ║                                                                                ║
+    ║       █████╗ ██████╗  ██████╗██╗  ██╗██╗████████╗███████╗ ██████╗████████╗     ║
+    ║      ██╔══██╗██╔══██╗██╔════╝██║  ██║██║╚══██╔══╝██╔════╝██╔════╝╚══██╔══╝     ║
+    ║      ███████║██████╔╝██║     ███████║██║   ██║   █████╗  ██║        ██║        ║
+    ║      ██╔══██║██╔══██╗██║     ██╔══██║██║   ██║   ██╔══╝  ██║        ██║        ║
+    ║      ██║  ██║██║  ██║╚██████╗██║  ██║██║   ██║   ███████╗╚██████╗   ██║        ║
+    ║      ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝ ╚═════╝   ╚═╝        ║
+    ║                                                                                ║
+    ║                             CLI Filesystem BUILDER                             ║
+    ║                                                                                ║                                                                                                ║
+    ╚════════════════════════════════════════════════════════════════════════════════╝
 """
 
 import os
@@ -49,23 +58,24 @@ class ArchitectureBuilder:
         if not line.strip():
             return 0
 
-        # Remove the actual content to analyze only the prefix
+        # Find where the actual content starts
         content_match = re.search(r'[^\s│├└─]+', line)
         if not content_match:
             return 0
 
         prefix = line[:content_match.start()]
 
-        # here we count the depth by counting tree structure patterns
-        # Each level is typically represented by either:
-        # - "│   " (4 chars) for continuing vertical lines
-        # - "    " (4 chars) for empty space at that level
-        # - "├── " or "└── " (4 chars) for the actual connector
+        if any(char in prefix for char in ['│', '├', '└', '─']):
+            return self._calculate_tree_level(prefix)
 
+        return self._calculate_regular_indent_level(prefix)
+    
+    def _calculate_tree_level(self, prefix):
         level = 0
         i = 0
 
         while i < len(prefix):
+            # Check for 4-character tree patterns
             if i + 4 <= len(prefix):
                 four_chars = prefix[i:i+4]
                 if four_chars in ['│   ', '    ']:
@@ -76,6 +86,7 @@ class ArchitectureBuilder:
                     level += 1
                     break
                 
+            # Check for 3-character tree patterns
             if i + 3 <= len(prefix):
                 three_chars = prefix[i:i+3]
                 if three_chars in ['├──', '└──']:
@@ -85,7 +96,50 @@ class ArchitectureBuilder:
             i += 1
 
         return level
-    
+
+    def _calculate_regular_indent_level(self, prefix):
+        tab_count = prefix.count('\t')
+        if tab_count > 0:
+            return tab_count
+
+        space_count = len(prefix)
+        if space_count == 0:
+            return 0
+
+        for indent_size in [2, 4, 8]:
+            if space_count % indent_size == 0:
+                return space_count // indent_size
+
+        # Fallback: assume 4-space indentation
+        return space_count // 4
+
+    def _auto_detect_indentation(self, lines):
+        """Auto-detect the indentation style from the content"""
+        indent_sizes = []
+        
+        for line in lines:
+            if not line.strip():
+                continue
+                
+            # Skip tree characters
+            if any(char in line for char in ['│', '├', '└', '─']):
+                continue
+                
+            # Count leading spaces
+            leading_spaces = len(line) - len(line.lstrip(' '))
+            if leading_spaces > 0:
+                indent_sizes.append(leading_spaces)
+        
+        if not indent_sizes:
+            return 4  # Default
+        
+        import math
+        gcd = indent_sizes[0]
+        for size in indent_sizes[1:]:
+            gcd = math.gcd(gcd, size)
+        
+        return gcd if gcd > 0 else 4
+
     def _extract_name(self, line):
         name = re.sub(r'^[\s│├└─]+', '', line).strip()
         
@@ -437,8 +491,18 @@ class StructureFormatter:
         return f"{size_bytes:.1f} {units[i]}"
 
 def run_interactive_mode():
-    print("Welcome to Architect Interactive Mode!")
-    print("="*35)
+    print("    ╔════════════════════════════════════════════════════════════════════════════════╗")
+    print("    ║                                                                                ║")
+    print("    ║       █████╗ ██████╗  ██████╗██╗  ██╗██╗████████╗███████╗ ██████╗████████╗     ║")
+    print("    ║      ██╔══██╗██╔══██╗██╔════╝██║  ██║██║╚══██╔══╝██╔════╝██╔════╝╚══██╔══╝     ║")
+    print("    ║      ███████║██████╔╝██║     ███████║██║   ██║   █████╗  ██║        ██║        ║")
+    print("    ║      ██╔══██║██╔══██╗██║     ██╔══██║██║   ██║   ██╔══╝  ██║        ██║        ║")
+    print("    ║      ██║  ██║██║  ██║╚██████╗██║  ██║██║   ██║   ███████╗╚██████╗   ██║        ║")
+    print("    ║      ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝ ╚═════╝   ╚═╝        ║")
+    print("    ║                                                                                ║")
+    print("    ║                             CLI Filesystem BUILDER                             ║")
+    print("    ║                              > interactive mode <                              ║")
+    print("    ╚════════════════════════════════════════════════════════════════════════════════╝")
     
     while True:
         choice = input("What would you like to do? (create/scan/exit): ").lower().strip()
