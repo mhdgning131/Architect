@@ -18,17 +18,17 @@ A powerful command-line tool for creating file structures from text representati
 
 ```bash
 # One-liner installation
-curl -sSL https://raw.githubusercontent.com/yourusername/architect-cli/main/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/mhdgning131/architect-cli/main/install.sh | bash
 
 # System-wide installation
-curl -sSL https://raw.githubusercontent.com/yourusername/architect-cli/main/install.sh | bash -s -- --system
+curl -sSL https://raw.githubusercontent.com/mhdgning131/architect-cli/main/install.sh | bash -s -- --system
 ```
 
 ### Option 2: Manual Installation
 
 ```bash
 # Download and run installer
-wget https://raw.githubusercontent.com/yourusername/architect-cli/main/install.sh
+wget https://raw.githubusercontent.com/mhdgning131/architect-cli/main/install.sh
 chmod +x install.sh
 ./install.sh --help
 ```
@@ -36,7 +36,7 @@ chmod +x install.sh
 ### Option 4: From Source
 
 ```bash
-git clone https://github.com/yourusername/architect-cli.git
+git clone https://github.com/mhdgning131/architect-cli.git
 cd architect-cli
 ./install.sh
 ```
