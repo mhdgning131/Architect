@@ -17,7 +17,7 @@ A powerful command-line tool for creating file structures from text representati
 ### Option 1: From Source (Recommended)
 
 ```bash
-git clone https://github.com/mhdgning131/architect.git
+cd ~ && git clone https://github.com/mhdgning131/architect.git .architect
 cd architect
 sudo chmo +x install.sh
 ./install.sh

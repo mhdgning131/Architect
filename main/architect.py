@@ -29,7 +29,7 @@ class ArchitectureBuilder:
             indent_level = self._calculate_indent_level(line)
             
             name = self._extract_name(line)
-            print(f"DEBUG: Line: '{line}' -> Level: {indent_level}, Name: '{name}'")
+            #print(f"DEBUG: Line: '{line}' -> Level: {indent_level}, Name: '{name}'")
 
             if name:
                 is_directory = name.endswith('/')
@@ -254,11 +254,16 @@ class DirectoryScanner:
 
 class StructureFormatter:
     @staticmethod
-    def to_tree_ascii(structure: List[Dict], show_size: bool = False) -> str:
+    def to_tree_ascii(structure: List[Dict], show_size: bool = False, folder_name: str = None) -> str:
         if not structure:
             return ""
 
         result = []
+        
+        # Add header if folder_name is provided
+        if folder_name:
+            result.append(f"{folder_name}/")
+        
         prefix_stack = []
 
         for i, item in enumerate(structure):
@@ -293,11 +298,18 @@ class StructureFormatter:
         return "\n".join(result)
     
     @staticmethod
-    def to_simple_tree(structure: List[Dict], show_size: bool = False) -> str:
+    def to_simple_tree(structure: List[Dict], show_size: bool = False, folder_name: str = None) -> str:
         if not structure:
             return ""
         
         result = []
+        
+        # Add header if folder_name is provided
+        if folder_name:
+            result.append(f"Structure of {folder_name}")
+            result.append("")
+            result.append(f"{folder_name}/")
+        
         for item in structure:
             indent = "  " * item['level']
             name = item['name']
@@ -351,8 +363,15 @@ class StructureFormatter:
         return "\n".join(result)
     
     @staticmethod
-    def to_markdown(structure: List[Dict], show_size: bool = False) -> str:
-        result = ["# Directory Structure\n"]
+    def to_markdown(structure: List[Dict], show_size: bool = False, folder_name: str = None) -> str:
+        result = []
+        
+        if folder_name:
+            result.append(f"# Structure of {folder_name}")
+            result.append("")
+        else:
+            result.append("# Directory Structure")
+            result.append("")
         
         for item in structure:
             indent = "  " * item['level']
@@ -529,9 +548,9 @@ def interactive_scan_wizard():
         pretty = input("Pretty print JSON/XML output? (y/n): ").lower().strip() == 'y'
 
         if format_choice == 'tree':
-            output = formatter.to_tree_ascii(structure, show_size)
+            output = formatter.to_tree_ascii(structure, show_size, dir_path.name)
         elif format_choice == 'simple':
-            output = formatter.to_simple_tree(structure, show_size)
+            output = formatter.to_simple_tree(structure, show_size, dir_path.name)
         elif format_choice == 'json':
             output = formatter.to_json(structure, pretty)
         elif format_choice == 'yaml':
@@ -539,7 +558,7 @@ def interactive_scan_wizard():
         elif format_choice == 'xml':
             output = formatter.to_xml(structure)
         elif format_choice == 'markdown':
-            output = formatter.to_markdown(structure, show_size)
+            output = formatter.to_markdown(structure, show_size, dir_path.name)
 
         print("\n--- Scan Result Preview (first 20 lines) ---")
         preview_lines = output.split('\n')
@@ -706,9 +725,9 @@ python architect.py -i
             formatter = StructureFormatter()
             
             if args.format == 'tree':
-                output = formatter.to_tree_ascii(structure, args.show_size)
+                output = formatter.to_tree_ascii(structure, args.show_size, directory.name)
             elif args.format == 'simple':
-                output = formatter.to_simple_tree(structure, args.show_size)
+                output = formatter.to_simple_tree(structure, args.show_size, directory.name)
             elif args.format == 'json':
                 output = formatter.to_json(structure, args.pretty)
             elif args.format == 'yaml':
@@ -716,9 +735,9 @@ python architect.py -i
             elif args.format == 'xml':
                 output = formatter.to_xml(structure)
             elif args.format == 'markdown':
-                output = formatter.to_markdown(structure, args.show_size)
+                output = formatter.to_markdown(structure, args.show_size, directory.name)
             elif args.format == 'terminal':
-                output = formatter.to_tree_ascii(structure, args.show_size)
+                output = formatter.to_tree_ascii(structure, args.show_size, directory.name)
             
             if args.output:
                 try:
