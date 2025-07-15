@@ -195,6 +195,14 @@ main() {
     remaining=$(check_installations)
     if [ -z "$remaining" ]; then
         print_success "All installations successfully removed"
+        if [ "$(realpath "$PWD")" = "$(realpath "$HOME/.architect")" ]; then
+            cd "$HOME" || {
+                print_error "Failed to cd to \$HOME. Aborting deletion."
+                exit 1
+            }
+        fi
+        rm -rf "$HOME/.architect"
+
     else
         print_warning "Some installations may still remain"
     fi
