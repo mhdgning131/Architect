@@ -1,6 +1,6 @@
-# Architect
+# Architect CLI
 
-CLI tool for creating file structures from text representations and scanning existing directories to generate structured outputs.
+A powerful command-line tool for creating file structures from text representations and scanning existing directories to generate structured outputs.
 
 ## Features
 
@@ -14,16 +14,38 @@ CLI tool for creating file structures from text representations and scanning exi
 
 ## Installation
 
+### Option 1: Quick Install (Recommended)
+
 ```bash
-git clone https://github.com/mhdgning131/architect.git
-cd architect-cli
+# One-liner installation
+curl -sSL https://raw.githubusercontent.com/yourusername/architect-cli/main/install.sh | bash
+
+# System-wide installation
+curl -sSL https://raw.githubusercontent.com/yourusername/architect-cli/main/install.sh | bash -s -- --system
 ```
 
-### Optional Dependencies
+### Option 2: Manual Installation
 
-For YAML output support:
 ```bash
-pip install pyyaml
+# Download and run installer
+wget https://raw.githubusercontent.com/yourusername/architect-cli/main/install.sh
+chmod +x install.sh
+./install.sh --help
+```
+
+### Option 4: From Source
+
+```bash
+git clone https://github.com/yourusername/architect-cli.git
+cd architect-cli
+./install.sh
+```
+
+After installation, you can use `architect` command globally:
+
+```bash
+architect --help
+architect scan .
 ```
 
 ## Quick Start
@@ -32,29 +54,29 @@ pip install pyyaml
 
 ```bash
 # From a file
-python architect.py create -f structure.txt
+architect create -f structure.txt
 
 # From stdin
 echo "project/
 ├── src/
 │   └── main.py
-└── README.md" | python architect.py create
+└── README.md" | architect create
 ```
 
 ### Scan an existing directory
 
 ```bash
 # Basic scan
-python architect.py scan /path/to/directory
+architect scan /path/to/directory
 
 # With options
-python architect.py scan /path/to/directory --format json --show-size --max-depth 3
+architect scan . --format json --show-size --max-depth 3
 ```
 
 ### Interactive mode
 
 ```bash
-python architect.py --interactive
+architect --interactive
 ```
 
 ## Usage Examples
@@ -77,22 +99,22 @@ project/
 **Commands:**
 ```bash
 # Create with dry-run
-python architect.py create -f structure.txt --dry-run
+architect create -f structure.txt --dry-run
 
 # Create in specific directory
-python architect.py create -f structure.txt -o ./my-project
+architect create -f structure.txt -o ./my-project
 ```
 
 ### Scanning Directories
 
 ```bash
 # Different output formats
-python architect.py scan . --format json --output structure.json
-python architect.py scan . --format yaml --pretty
-python architect.py scan . --format markdown --show-size
+architect scan . --format json --output structure.json
+architect scan . --format yaml --pretty
+architect scan . --format markdown --show-size
 
 # With filtering
-python architect.py scan . --ignore "*.log" --ignore "node_modules" --max-depth 2
+architect scan . --ignore "*.log" --ignore "node_modules" --max-depth 2
 ```
 
 ## Output Formats
@@ -110,7 +132,7 @@ python architect.py scan . --ignore "*.log" --ignore "node_modules" --max-depth 
 
 ### Create Command
 ```bash
-python architect.py create [OPTIONS]
+architect create [OPTIONS]
 
 Options:
   -f, --file PATH     Input file with structure
@@ -121,7 +143,7 @@ Options:
 
 ### Scan Command
 ```bash
-python architect.py scan [DIRECTORY] [OPTIONS]
+architect scan [DIRECTORY] [OPTIONS]
 
 Options:
   --format FORMAT     Output format (tree, simple, json, yaml, xml, markdown)
