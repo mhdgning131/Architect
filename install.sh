@@ -47,7 +47,6 @@ check_python() {
     PYTHON_VERSION=$(python3 -c 'import sys; print(".".join(map(str, sys.version_info[:2])))')
     print_info "Found Python $PYTHON_VERSION"
     
-    # Check if Python version is >= 3.6
     if python3 -c 'import sys; exit(0 if sys.version_info >= (3, 6) else 1)'; then
         print_success "Python version is compatible"
     else
