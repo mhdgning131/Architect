@@ -9,9 +9,10 @@
     ║      ██║  ██║██║  ██║╚██████╗██║  ██║██║   ██║   ███████╗╚██████╗   ██║        ║
     ║      ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝ ╚═════╝   ╚═╝        ║
     ║                                                                                ║
-    ║                             CLI Filesystem BUILDER                             ║
-    ║                                                                                ║                                                                                                ║
+    ║                           CLI File structure builder                           ║
+    ║                                    v 1.0.0                                     ║                                                                                                ║
     ╚════════════════════════════════════════════════════════════════════════════════╝
+                                                                     
 """
 
 import os
@@ -500,7 +501,7 @@ def run_interactive_mode():
     print("    ║      ██║  ██║██║  ██║╚██████╗██║  ██║██║   ██║   ███████╗╚██████╗   ██║        ║")
     print("    ║      ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝ ╚═════╝   ╚═╝        ║")
     print("    ║                                                                                ║")
-    print("    ║                             CLI Filesystem BUILDER                             ║")
+    print("    ║                           CLI File structure builder                           ║")
     print("    ║                              > interactive mode <                              ║")
     print("    ╚════════════════════════════════════════════════════════════════════════════════╝")
     
@@ -519,7 +520,7 @@ def run_interactive_mode():
             print("Invalid choice. Please enter 'create', 'scan', or 'exit'.")
 
 def interactive_create_wizard():
-    print("\n--- Create Structure Wizard ---")
+    print("\n[- Create Structure Wizard -]")
     
     source = ""
     while source not in ['file', 'text']:
@@ -551,7 +552,7 @@ def interactive_create_wizard():
         print("Could not parse any valid structure from the input.")
         return
 
-    print("\n--- Structure Preview ---")
+    print("\n[- Structure Preview -]")
     for item in structure:
         indent = "  " * item['level']
         type_str = "🗁" if item['is_directory'] else "🗎"

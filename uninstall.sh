@@ -104,8 +104,8 @@ main() {
     echo "    ║      ██║  ██║██║  ██║╚██████╗██║  ██║██║   ██║   ███████╗╚██████╗   ██║        ║"
     echo "    ║      ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝ ╚═════╝   ╚═╝        ║"
     echo "    ║                                                                                ║"
-    echo "    ║                             CLI Filesystem BUILDER                             ║"
-    echo "    ║                                                                                ║"
+    echo "    ║                           CLI File structure builder                           ║"
+    echo "    ║                                    v 1.0.0                                     ║"
     echo "    ╚════════════════════════════════════════════════════════════════════════════════╝"
     
     installations=($(check_installations))

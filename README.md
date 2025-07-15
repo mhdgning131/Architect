@@ -1,6 +1,19 @@
-# Architect CLI
+```
+    ╔════════════════════════════════════════════════════════════════════════════════╗
+    ║                                                                                ║
+    ║       █████╗ ██████╗  ██████╗██╗  ██╗██╗████████╗███████╗ ██████╗████████╗     ║
+    ║      ██╔══██╗██╔══██╗██╔════╝██║  ██║██║╚══██╔══╝██╔════╝██╔════╝╚══██╔══╝     ║
+    ║      ███████║██████╔╝██║     ███████║██║   ██║   █████╗  ██║        ██║        ║
+    ║      ██╔══██║██╔══██╗██║     ██╔══██║██║   ██║   ██╔══╝  ██║        ██║        ║
+    ║      ██║  ██║██║  ██║╚██████╗██║  ██║██║   ██║   ███████╗╚██████╗   ██║        ║
+    ║      ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝ ╚═════╝   ╚═╝        ║
+    ║                                                                                ║
+    ║                           CLI File structure builder                           ║
+    ║                                    v 1.0.0                                     ║
+    ╚════════════════════════════════════════════════════════════════════════════════╝
+```
 
-A powerful command-line tool for creating file structures from text representations and scanning existing directories to generate structured outputs.
+Architect is a command-line tool for creating file structures from text representations and scanning existing directories to generate structured outputs.
 
 ## Features
 
