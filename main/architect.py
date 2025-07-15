@@ -517,7 +517,7 @@ def interactive_scan_wizard():
     ignore_patterns = [p.strip() for p in ignore_str.split(',')] if ignore_str else []
 
     scanner = DirectoryScanner(ignore_patterns)
-    print(f"\n🔍︎︎︎ Scanning directory: {dir_path.absolute()}...")
+    print(f"\n⛶ Scanning directory: {dir_path.absolute()}...")
     try:
         structure = scanner.scan_directory(dir_path, max_depth)
         if not structure:
@@ -557,8 +557,7 @@ def interactive_scan_wizard():
             except Exception as e:
                 print(f"✘ Error saving file: {e}")
         else:
-            print(f"\n🗁  Structure of the directory '{dir_path.name}':")
-            print("=" * 50)
+            print(f"\n🗁  {dir_path.name}/")
             print(output)
             print("=" * 50)
             print(f"-> Total: {len(structure)} elements")
@@ -683,7 +682,7 @@ python architect.py -i
         if not args.dry_run:
             print(f"\n✓ {len(created)} elements successfully created!")
         else:
-            print(f"\n🔍︎︎ {len(created)} elements would be created")
+            print(f"\n⌕︎ {len(created)} elements would be created")
     
     elif args.command == 'scan':
         directory = Path(args.directory)
@@ -695,7 +694,7 @@ python architect.py -i
         ignore_patterns = args.ignore or []
         scanner = DirectoryScanner(ignore_patterns)
         
-        print(f"🔍︎︎︎ Scanning directory: {directory.absolute()}")
+        print(f"⛶ Scanning directory: {directory.absolute()}")
         
         try:
             structure = scanner.scan_directory(directory, args.max_depth)
@@ -729,8 +728,7 @@ python architect.py -i
                 except Exception as e:
                     print(f"✘ Error during saving: {e}")
             else:
-                print(f"\n🗁  Structure of the directory '{directory.name}':")
-                print("=" * 50)
+                print(f"\n🗁  {directory.name}/")
                 print(output)
                 print("=" * 50)
                 print(f"-> Total: {len(structure)} elements")
