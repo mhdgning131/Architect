@@ -1,1 +1,5 @@
+.gitignore
 project.txt
+pyproject.toml
+dist*
+architect_cli.egg-info*
