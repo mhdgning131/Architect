@@ -14,26 +14,7 @@ A powerful command-line tool for creating file structures from text representati
 
 ## Installation
 
-### Option 1: Quick Install (Recommended)
-
-```bash
-# One-liner installation
-curl -sSL https://raw.githubusercontent.com/mhdgning131/architect/main/install.sh | bash
-
-# System-wide installation
-curl -sSL https://raw.githubusercontent.com/mhdgning131/architect/main/install.sh | bash -s -- --system
-```
-
-### Option 2: Manual Installation
-
-```bash
-# Download and run installer
-wget https://raw.githubusercontent.com/mhdgning131/architect/main/install.sh
-chmod +x install.sh
-./install.sh --help
-```
-
-### Option 4: From Source
+### Option 1: From Source (Recommended)
 
 ```bash
 git clone https://github.com/mhdgning131/architect.git
