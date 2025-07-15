@@ -18,8 +18,8 @@ A powerful command-line tool for creating file structures from text representati
 
 ```bash
 cd ~ && git clone https://github.com/mhdgning131/architect.git .architect
-cd architect
-sudo chmo +x install.sh
+cd .architect
+sudo chmod +x install.sh
 ./install.sh
 ```
 
